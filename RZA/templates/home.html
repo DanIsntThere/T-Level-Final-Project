@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <img src="{% static 'lionHOME2.jpg' %}" alt=""><!-- Hero image -->
+    <div id="cta">
+      <a href="{% url 'RZA:tickets' %}">Book Tickets NOW</a><!-- Call to action button -->
+    </div>
+</div>
+
+<h1 id="title"><span>Explore</span> Riget Zoo Adventures</h1><!-- title -->
+
+<div class="tiles-container"><!-- Tiles container -->
+    <div class="tile">
+      <img src="{% static 'redpandaHOME.jpg' %}" alt="Red panda"><!-- Tile -->
+      <div class="content">
+        <a href="{% url 'RZA:hotel' %}" class="button">Book a Room</a>
+      </div>
+    </div>
+  
+    <div class="tile">
+      <img src="{% static 'cheetaHOME.jpg' %}" alt="Cheeta"><!-- Tile -->
+      <div class="content">
+        <a href="{% url 'users:register_user' %}" class="button">Sign Up</a>
+      </div>
+    </div>
+  
+    <div class="tile">
+      <img src="{% static 'giraffeJHOME.jpg' %}" alt="Giraffe"><!-- Tile -->
+      <div class="content">
+        <a href="{% url 'RZA:information' %}" class="button">Help and info</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

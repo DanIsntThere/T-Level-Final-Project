@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "base.html" %}<!-- Gets base -->
+{% block title %}Book Tickets{% endblock %}<!-- Title -->
+{% load static %}
+{% block content %}
+    <h2>Zoo Ticket Booking</h2>
+    {% if user.is_authenticated %}<!-- If user is logged in -->
+        <form class="ticketForm" action="{% url 'RZA:tickets' %}" method="post"><!-- Form -->
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" required><br><br>
+
+            <label for="num_adult_tickets">Adult Tickets:</label>
+            <button type="button" class="decrement">-</button>      <!--Adult ticket info and buttons -->
+            <input type="number" name="num_adult_tickets" id="num_adult_tickets" value="0" min="0" readonly>
+            <button type="button" class="increment">+</button>
+            <span id="adult_price">10</span> GBP<br><br>
+
+            <label for="num_child_tickets">Child Tickets:</label>
+            <button type="button" class="decrement">-</button>      <!-- Child ticket info and buttons -->
+            <input type="number" name="num_child_tickets" id="num_child_tickets" value="0" min="0" readonly>
+            <button type="button" class="increment">+</button>
+            <span id="child_price">5</span> GBP<br><br>
+
+            <label for="num_senior_tickets">Senior Tickets:</label>
+            <button type="button" class="decrement">-</button>      <!-- Senior ticket info and buttons -->
+            <input type="number" name="num_senior_tickets" id="num_senior_tickets" value="0" min="0" readonly>
+            <button type="button" class="increment">+</button>
+            <span id="senior_price">8</span> GBP<br><br>
+
+            <label>Total Price:</label><!-- Total label -->
+            <span id="total_price">0</span> GBP<br><br>
+            <input id="hidden_Price" type="hidden" name="hidden_Price" value="0"><!-- Hidden input so I can get value in views -->
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+        <div class="LoginErrorBox"><!-- If the user is not logged in this will appear -->
+            <h2>You must be logged in to make a booking</h2>
+            <form action="{% url 'users:register_user' %}"><!-- Link to create and account -->
+                <input type="submit" value="Create an account" />
+              </form>
+            <form action="{% url 'users:login_user' %}"><!-- Link to login -->
+                <input type="submit" value="Login" />
+            </form>
+        </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+
+    <h2 id="profTitle">Profile</h2><br><br>
+    <div id="profilePage">
+    <div class="profileContainer">
+        {% for profiles in profile %}
+            <img class="pfp" src="{{ profiles.image.url }}">
+            <p id="loyalty">Loyalty Points: {{ profiles.loyaltyPoints }}</p><br><br><br><br><br><br>
+        {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+        <div id="editDetails">
+            <h2>Edit details:</h2>
+            <form id="detailsForm" method="POST" enctype="multipart/form-data" action="{% url 'RZA:profile' %}">
+                {% csrf_token %}
+                {{ userForm.as_p }}<!-- User details form -->
+                {{ profileform }}<!-- Profile pic form -->
+                <input type="submit" value="Save changes">
+            </form>
+        </div>
+        <div class="bookingContainer">
+            <h2>Manage Bookings:</h2>
+            <h3 class="subHead">Zoo Ticket Bookings</h3><br><br>
+            <ul>
+            {% for booking in bookings %}<!-- Outputs all the users zoo bookings -->
+                <li>{{ booking.date }} - Total Price: {{ booking.total_price }} GBP
+                    <form action="{% url 'RZA:cancel_booking' booking.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Cancel Booking">
+                    </form>
+                </li>
+            {% endfor %}
+            </ul>
+            <h3 class="subHead">Hotel Bookings</h3>
+            <ul>
+                {% for booking in hotel %}<!-- Outputs all the users hotel bookings -->
+                    <li>{{ booking.date }} - Total Price: {{ booking.price }} GBP
+                        <form action="{% url 'RZA:cancel_hotel' booking.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Cancel Booking">
+                        </form>
+                    </li>
+                {% endfor %}
+                </ul>
+        </div>
+        {% else %}
+        <div class="LoginErrorBox"><!-- If the user isn't logged in this will appear -->
+            <h2>You must be logged in to access the profile page</h2>
+            <form action="{% url 'users:register_user' %}">
+                <input type="submit" value="Create an account" />
+              </form>
+            <form action="{% url 'users:login_user' %}">
+                <input type="submit" value="Login" />
+            </form>
+        </div>
+    {% endif %}
+    </div>
+{% endblock content %}

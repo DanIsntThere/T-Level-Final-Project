@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Information{% endblock %}
+{% block content %}
+
+<h2>Help and Information</h2><br>
+
+<div class="paragrahContent"><!-- Container -->
+    <h3>Welcome to Our Zoo's Help and Information page</h3><br>
+    <p class="info">At Riget Zoo Adventures, we strive to provide our visitors with all the assistance they need to ensure a memorable and 
+        enjoyable experience. Whether you’re planning your visit, have questions about our animals, or need assistance during your time at 
+        the zoo, you’ll find helpful resources and guidance here. </p><!-- Information -->
+    <br><br><h3>Visitor Information</h3><br>
+    <p class="info"><strong>Hours of Operation:</strong> Discover our opening and closing times to plan your visit accordingly.</p>
+    <p class="info"><strong>Ticket Prices:</strong> Learn about admission fees for adults, children, seniors, and any special discounts available.</p>
+    <p class="info"><strong>Directions:</strong> Find detailed directions to our zoo, including public transportation options and parking information. </p>
+    <p class="info"><strong>Accessibility:</strong> Explore our commitment to accessibility and accommodations for visitors with disabilities. </p>
+    <p class="info"><strong>Guided Tours:</strong> Learn about our guided tours, group rates, and how to book in advance. </p>
+    <!-- Strong tag makes the text bold -->
+    <br><br><h3>Animal Information</h3><br>
+    <p class="info"><strong>Animal Encounters:</strong> Discover our diverse range of animals, from majestic big cats to fascinating reptiles. </p>
+    <p class="info"><strong>Animal Welfare:</strong> Learn about our dedication to animal welfare and conservation efforts. </p>
+    <p class="info"><strong>Educational Resources:</strong> Explore educational materials about our animals, including fun facts, videos, and downloadable resources. </p>
+    <p class="info"><strong>Animal Care:</strong> Understand how we care for our animals’ physical and emotional well-being. </p>
+    <br><br>
+    <h2>Going on a school trip?</h3><br><br><br>
+    <a href="{% url 'RZA:schoolTrip' %}">Find more information here</a><!-- Link to school trip page -->
+</div><br><br>
+<div id="contactUsForm">
+    <h1>Still need help? <br>Contact Us</h1>
+<form class="contactus" action="" method="POST"><!-- Contact us form -->
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+</div>
+{% endblock content %}

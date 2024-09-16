@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Hotel{% endblock %}
+{% load static %}
+{% block content %}<!-- All the django base stuff -->
+    <h2>Hotel Booking</h2>
+    {% if user.is_authenticated %}<!-- If user is logged in -->
+        <form class="hotelForm" action="" method="POST">
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" required><br><br>
+            <label for="rooms">Choose a room:</label>
+            <select name="rooms" id="roomSelect" required>
+                <option  value="0" selected="true" disabled>Select a room</option><!-- Drop down -->
+                <option value="25">Koala Room</option>
+                <option value="75">Panda Room</option>
+                <option value="150">Lion Room</option>
+                <option value="200">Gorilla Room</option>
+            </select><br><br>
+            <label for="days">How many days is your stay?</label>
+            <input name="days" value="0" type="number" min="0" max="14" oninput="validity.valid||(value=value.replace(/\D+/g, ''))" id="days"><br><br>
+            <label>Total Price:</label>                                 <!-- Regex code that checks for any special characters it is a number input 
+                                                                            so the only symbols allowed a - and + which will allow users to break the system this stops that -->
+            <span id="total_price">0</span> GBP<br><br>
+            <input id="hidden_Price" type="hidden" name="hidden_Price" value="0">
+            <input type="submit" value="Submit">
+        </form>
+
+    {% else %}
+        <div class="LoginErrorBox">
+            <h2>You must be logged in to make a booking</h2>
+            <div class="ErrorForms">
+                <form action="{% url 'users:register_user' %}"><!-- If user isn't logged in this appears -->
+                    <input type="submit" value="Create an account" />
+                </form>
+                <form action="{% url 'users:login_user' %}">
+                    <input type="submit" value="Login" />
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
