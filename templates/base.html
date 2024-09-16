@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/ce16513dff.js" crossorigin="anonymous"></script><!-- Font awesome import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!-- Googel fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} "><!-- External CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'script.js' %}"></script><!-- EXternal JavaScript -->
+</head>
+<body>
+    <nav><!-- Semantic html for accessibilty -->
+        <ul>
+          <div id="nav-left">
+            <li><a href="{% url 'RZA:home' %}">Riget Zoo Adventures</a></li><!-- Home link -->
+          </div>
+
+          <li><a href="{% url 'RZA:tickets' %}">Book Tickets</a></li><!-- Link to key pages -->
+          <li><a href="{% url 'RZA:hotel' %}">Hotel</a></li>
+          <li><a href="{% url 'RZA:information' %}">Help and information</a></li>
+
+            <div id="nav-right">
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'RZA:profile' %}">Profile</a></li><!-- Link to profile and logout  -->
+              <li><a href="{% url 'users:logout_user' %}">Logout</a></li><!-- If user is logged in -->
+              {% else %}
+                <li><a href="{% url 'users:login_user' %}">Login</a></li><!-- Else they get login -->
+                <li><a href="{% url 'users:register_user' %}">Create an account</a></li><!-- And create account -->
+              {% endif %}
+            </div>
+        </ul>
+
+      </nav>
+      <div class="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div><!-- Burger menu for mobile -->
+        <div class="bar"></div>
+      </div>
+
+      <div class="container">
+        {% if messages %}
+            {% for message in messages %}<!-- Messages -->
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+      </div>
+      <br>
+      {% block content %}<!-- Where the content will appear from other pages -->
+      {% endblock content %}
+
+      <footer>
+        <a href="#nav-left" id="backToTop"><i class="fa-solid fa-arrow-up fa-xl" style="color: #ffff;"></i></a><!-- Back to top button -->
+        <h1>Riget<br>Zoo<br>Adventures</h1><!-- Branding -->
+
+        <div class="socials"><!-- Social media links -->
+          <a href="https://www.x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-2xl" style="color: #000000;"></i></a>
+          <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook-f fa-2xl" style="color: #000000;"></i></a>
+          <a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-2xl" style="color: #000000;"></i></a>
+        </div><br>
+        <div class="links"><!-- Links to other pages -->
+          <a href="{% url 'RZA:tickets' %}" >Book Tickets</a>
+          <a href="{% url 'RZA:hotel' %}">Hotel</a>
+          <a href="{% url 'RZA:information' %}">Help and information</a>
+        </div>
+        <a href="{% url 'RZA:policy' %}">Privacy Policy</a><br><!-- Links to privacy policy -->
+        <a href="{% url 'RZA:terms' %}">Terms and Conditions</a><!-- And t&cs -->
+        </div>
+      </footer>
+</body>
+</html>
